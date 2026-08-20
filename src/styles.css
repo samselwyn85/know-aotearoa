@@ -1,0 +1,499 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap");
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@theme {
+  /* Awwwards “Best 3D websites” collection (awwwards.com/websites/3d/, live CSS Aug 2026).
+     Font: Inter Tight variable. Ink #222, paper #F8F8F8, theme-color #3ea094.
+     Accents from their tokens: inspire #AAEEC4, read gold #c0ab3c, connect orange #FA5D29.
+     NZDep orange kept for the official map / housing street. Purple awards token unused. */
+  --color-paper: #f8f8f8;
+  --color-ink: #222222;
+  --color-muted: #7a7a7a;
+  --color-hair: #ededed;
+  --color-panel: #ffffff;
+  --color-lagoon: #3ea094;
+  --color-lagoon-mid: #6eb8ad;
+  --color-lagoon-deep: #2a6f67;
+  --color-lagoon-soft: #e2f4e9;
+  --color-kowhai: #c0ab3c;
+  --color-kowhai-bg: #dbd6c0;
+  --color-ok: #27ae60;
+  --color-ok-bg: #e0f4d9;
+  --color-dep-lo: #fff7ed;
+  --color-dep-mid: #fb923c;
+  --color-dep-hi: #7c2d12;
+  --color-map-empty: #f8f8f8;
+  --color-bg: var(--color-paper);
+  --color-fg: var(--color-ink);
+  --color-surface: var(--color-panel);
+  --color-primary: var(--color-lagoon);
+  --color-border: var(--color-hair);
+
+  --font-display: "Inter Tight", "Inter", "Segoe UI", system-ui, sans-serif;
+  --font-sans: "Inter Tight", "Inter", "Segoe UI", system-ui, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", "Cascadia Code", Menlo, monospace;
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-xl: 24px;
+  --radius-sheet: 28px;
+
+  --text-mega: clamp(2.6rem, 8.5vw, 6.4rem);
+  --text-bleed: clamp(3.2rem, 12vw, 8.2rem);
+  --text-scene: clamp(1.7rem, 3.6vw, 3rem);
+  --text-kicker: 0.6875rem;
+
+  --shadow-sm: 0 0 0 1px rgba(34, 34, 34, 0.08);
+  --shadow-md: 0 12px 32px rgba(34, 34, 34, 0.08);
+  --shadow-lg: 0 24px 60px rgba(34, 34, 34, 0.16);
+
+  --ease-out-soft: cubic-bezier(0.445, 0.05, 0.55, 0.95);
+  --motion-stagger: 40ms;
+  --motion-quick: 150ms;
+  --motion-fast: 250ms;
+  --motion-emphasis: 500ms;
+}
+
+@layer base {
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+  html {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  body {
+    font-family: var(--font-sans);
+    background: var(--color-paper);
+    color: var(--color-ink);
+    min-height: 100dvh;
+    overflow-x: hidden;
+  }
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+  :focus-visible {
+    outline: 3px solid color-mix(in oklab, var(--color-lagoon) 70%, white);
+    outline-offset: 2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes pulse-stroke {
+  0%,
+  100% {
+    stroke-width: 2.2;
+  }
+  50% {
+    stroke-width: 3.4;
+  }
+}
+
+.geo-path {
+  stroke: #fff;
+  stroke-width: 0.7;
+  cursor: pointer;
+  transition:
+    fill 0.45s var(--ease-out-soft),
+    filter 0.22s ease,
+    stroke-width 0.22s ease;
+}
+.geo-path:hover,
+.geo-path:focus-visible {
+  filter: brightness(0.92) drop-shadow(0 0 6px rgba(62, 160, 148, 0.4));
+  outline: none;
+}
+.geo-path.is-selected {
+  stroke: var(--color-ink);
+  stroke-width: 2.2;
+  filter: drop-shadow(0 0 10px rgba(62, 160, 148, 0.45));
+}
+@media (prefers-reduced-motion: no-preference) {
+  .geo-path.is-selected.just-selected {
+    animation: pulse-stroke 1.6s ease-in-out 1;
+  }
+}
+
+.card-enter {
+  animation: rise 0.45s var(--ease-out-soft) both;
+}
+
+.stagger-in > * {
+  animation: rise 0.5s var(--ease-out-soft) both;
+}
+.stagger-in > *:nth-child(1) {
+  animation-delay: 40ms;
+}
+.stagger-in > *:nth-child(2) {
+  animation-delay: 90ms;
+}
+.stagger-in > *:nth-child(3) {
+  animation-delay: 140ms;
+}
+.stagger-in > *:nth-child(4) {
+  animation-delay: 190ms;
+}
+.stagger-in > *:nth-child(6) {
+  animation-delay: 290ms;
+}
+.stagger-in > *:nth-child(7) {
+  animation-delay: 340ms;
+}
+.stagger-in > *:nth-child(8) {
+  animation-delay: 390ms;
+}
+
+@keyframes bar-grow {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes waffle-on {
+  from {
+    transform: scale(0.55);
+    opacity: 0.25;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes pop-dot {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+.bar-grow {
+  transform-origin: left center;
+  animation: bar-grow 0.7s var(--ease-out-soft) both;
+}
+
+.waffle-on {
+  animation: waffle-on 0.28s var(--ease-out-soft) both;
+}
+
+.dot-pop {
+  animation: pop-dot 0.4s var(--ease-out-soft) both;
+}
+
+.paper-grain {
+  position: relative;
+  isolation: isolate;
+}
+.paper-grain::after {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  opacity: 0.05;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.02  0 0 0 0 0.02  0 0 0 0 0.02  0 0 0 0.5 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+.island-breathe {
+  transform-origin: 45% 55%;
+  animation: island-breathe 12s var(--ease-out-soft) infinite alternate;
+}
+
+@keyframes island-breathe {
+  from {
+    transform: scale(1) translate3d(0, 0, 0);
+    opacity: 0.16;
+  }
+  to {
+    transform: scale(1.04) translate3d(0, -8px, 0);
+    opacity: 0.28;
+  }
+}
+
+.scene-enter {
+  animation: scene-enter 0.55s var(--ease-out-soft) both;
+}
+
+@keyframes scene-enter {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: blur(0);
+  }
+}
+
+.room-in {
+  animation: room-in 0.7s var(--ease-out-soft) both;
+}
+
+@keyframes room-in {
+  from {
+    clip-path: inset(10% 0 0 0);
+    opacity: 0.55;
+    filter: blur(4px);
+  }
+  to {
+    clip-path: inset(0);
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+.tab-pill {
+  transition:
+    transform var(--motion-fast) var(--ease-out-soft),
+    width var(--motion-fast) var(--ease-out-soft);
+}
+
+.monument {
+  transform-origin: bottom center;
+  animation: monument 0.85s var(--ease-out-soft) both;
+}
+
+@keyframes monument {
+  from {
+    transform: scaleY(0.08);
+    opacity: 0.4;
+  }
+  to {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+
+.display-mega {
+  font-family: var(--font-display);
+  font-size: var(--text-mega);
+  font-weight: 500;
+  line-height: 0.96;
+  letter-spacing: -0.04em;
+}
+
+.display-bleed {
+  font-family: var(--font-display);
+  font-size: var(--text-bleed);
+  font-weight: 500;
+  line-height: 0.9;
+  letter-spacing: -0.045em;
+}
+
+.display-scene {
+  font-family: var(--font-display);
+  font-size: var(--text-scene);
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+}
+
+.kicker {
+  font-family: var(--font-sans);
+  font-size: var(--text-kicker);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.person {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.12rem;
+  aspect-ratio: 1 / 1.35;
+  color: color-mix(in oklab, var(--color-lagoon-mid) 72%, transparent);
+}
+.person-lagoon.is-on {
+  color: var(--color-lagoon);
+}
+.person-dep.is-on {
+  color: var(--color-dep-hi);
+}
+.person-kowhai.is-on {
+  color: var(--color-kowhai);
+}
+.person-head {
+  width: 42%;
+  aspect-ratio: 1;
+  border-radius: 999px;
+  background: currentColor;
+}
+.person-body {
+  width: 70%;
+  flex: 1;
+  border-radius: 999px 999px 4px 4px;
+  background: currentColor;
+}
+
+@keyframes person-pop {
+  from {
+    transform: scale(0.45);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+.person-pop {
+  animation: person-pop 0.42s var(--ease-out-soft) both;
+}
+
+.house {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: stretch;
+  min-width: 0;
+  color: color-mix(in oklab, var(--color-dep-mid) 45%, var(--color-paper));
+}
+.house.is-on {
+  color: var(--color-dep-hi);
+}
+.house-roof {
+  height: 1.6rem;
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+  background: currentColor;
+}
+.house-wall {
+  height: 3.4rem;
+  margin-inline: 12%;
+  border-radius: 0 0 4px 4px;
+  background: currentColor;
+}
+@media (min-width: 640px) {
+  .house-roof {
+    height: 2.2rem;
+  }
+  .house-wall {
+    height: 4.5rem;
+  }
+}
+
+@keyframes house-rise {
+  from {
+    transform: translateY(12px);
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+.house-rise {
+  animation: house-rise 0.55s var(--ease-out-soft) both;
+}
+
+.age-city-lagoon {
+  background: var(--color-lagoon);
+}
+.age-city-lagoon-mid {
+  background: var(--color-lagoon-mid);
+}
+.age-city-kowhai {
+  background: var(--color-kowhai);
+}
+.age-window {
+  background: color-mix(in oklab, var(--color-panel) 82%, transparent);
+  animation: window-lit 0.45s var(--ease-out-soft) both;
+}
+
+@keyframes window-lit {
+  from {
+    opacity: 0.15;
+    transform: scale(0.6);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.tower-floor {
+  color: var(--color-panel);
+  animation: rise 0.55s var(--ease-out-soft) both;
+}
+.tower-floor.is-dim {
+  opacity: 0.38;
+}
+.tower-floor:last-child {
+  border-radius: 16px 16px 0 0;
+}
+.tower-floor:first-child {
+  border-radius: 0;
+}
+
+.split-a,
+.split-b {
+  min-height: 12rem;
+}
+@media (min-width: 640px) {
+  .split-a {
+    clip-path: polygon(0 0, 100% 0, 92% 100%, 0 100%);
+    margin-right: -8%;
+  }
+  .split-b {
+    clip-path: polygon(8% 0, 100% 0, 100% 100%, 0 100%);
+    margin-left: -8%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .island-breathe,
+  .scene-enter,
+  .room-in,
+  .monument,
+  .person-pop,
+  .house-rise,
+  .age-window,
+  .tower-floor,
+  .paper-grain::after {
+    animation: none !important;
+  }
+  .scene-enter,
+  .room-in {
+    clip-path: none;
+    filter: none;
+    opacity: 1;
+    transform: none;
+  }
+}
