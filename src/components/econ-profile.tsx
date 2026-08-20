@@ -159,9 +159,9 @@ function PlaceSearch({ current }: { current: Place }) {
   );
 }
 
-export function EconProfile({ slug }: { slug: string }) {
+export function EconProfile({ slug, initialTab }: { slug: string; initialTab?: ProfileTab }) {
   const place = findBySlug(slug);
-  const [tab, setTab] = useState<ProfileTab>("overview");
+  const [tab, setTab] = useState<ProfileTab>(initialTab && TABS.some((t) => t.id === initialTab) ? initialTab : "overview");
   const [cmpSlug, setCmpSlug] = useState("auckland-region");
 
   useEffect(() => {

@@ -477,6 +477,120 @@
   }
 }
 
+.foyer-stage > .foyer-item {
+  animation: foyer-in 0.7s var(--ease-out-soft) both;
+}
+.foyer-stage > .foyer-item:nth-child(1) {
+  animation-delay: 40ms;
+}
+.foyer-stage > .foyer-item:nth-child(2) {
+  animation-delay: 140ms;
+}
+.foyer-stage > .foyer-item:nth-child(3) {
+  animation-delay: 240ms;
+}
+.foyer-stage > .foyer-item:nth-child(4) {
+  animation-delay: 320ms;
+}
+.foyer-stage > .foyer-item:nth-child(5) {
+  animation-delay: 400ms;
+}
+.foyer-stage > .foyer-item:nth-child(6) {
+  animation-delay: 500ms;
+}
+.foyer-stage > .foyer-item:nth-child(7) {
+  animation-delay: 580ms;
+}
+
+@keyframes foyer-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+    filter: blur(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: blur(0);
+  }
+}
+
+@keyframes foyer-leave {
+  to {
+    opacity: 0;
+    transform: translateY(-16px);
+    filter: blur(8px);
+  }
+}
+.foyer-leave {
+  animation: foyer-leave 0.28s ease-in both;
+  pointer-events: none;
+}
+
+.title-line {
+  display: block;
+  overflow: hidden;
+}
+.title-line > span {
+  display: block;
+  animation: title-up 0.9s var(--ease-out-soft) both;
+}
+.title-line:nth-child(2) > span {
+  animation-delay: 120ms;
+}
+
+@keyframes title-up {
+  from {
+    transform: translateY(108%);
+  }
+  to {
+    transform: none;
+  }
+}
+
+.island-reveal {
+  animation: island-reveal 1.6s var(--ease-out-soft) both;
+}
+
+@keyframes island-reveal {
+  from {
+    clip-path: inset(100% 12% 0 12%);
+    opacity: 0.2;
+  }
+  to {
+    clip-path: inset(0);
+    opacity: 1;
+  }
+}
+
+.foyer-cue {
+  animation: foyer-in 0.45s var(--ease-out-soft) both;
+}
+
+.foyer-reel {
+  scrollbar-width: none;
+  scroll-snap-type: x mandatory;
+}
+.foyer-reel::-webkit-scrollbar {
+  display: none;
+}
+.foyer-door {
+  scroll-snap-align: start;
+}
+.foyer-door .house-roof {
+  height: 0.7rem;
+}
+.foyer-door .house-wall {
+  height: 1.35rem;
+  margin-inline: 10%;
+}
+.foyer-door .person {
+  color: color-mix(in oklab, var(--color-lagoon-mid) 42%, transparent);
+}
+.foyer-door .person.is-on {
+  color: var(--color-lagoon);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .island-breathe,
   .scene-enter,
@@ -486,11 +600,19 @@
   .house-rise,
   .age-window,
   .tower-floor,
-  .paper-grain::after {
+  .paper-grain::after,
+  .foyer-stage > .foyer-item,
+  .title-line > span,
+  .island-reveal,
+  .foyer-cue,
+  .foyer-leave {
     animation: none !important;
   }
   .scene-enter,
-  .room-in {
+  .room-in,
+  .foyer-leave,
+  .title-line > span,
+  .island-reveal {
     clip-path: none;
     filter: none;
     opacity: 1;
