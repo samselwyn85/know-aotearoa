@@ -3,7 +3,6 @@ import { useExplorer } from "@/lib/store";
 import { NZ } from "@/lib/places";
 import { fmt, isRegion, money, pct } from "@/lib/format";
 import { pcRel, postcardChips, soWhatLine, placeKind } from "@/lib/insights";
-import { Beeswarm } from "./beeswarm";
 import { Button } from "@/components/ui/button";
 import type { Place } from "@/lib/types";
 
@@ -38,7 +37,7 @@ function Row({
   delta: string;
 }) {
   return (
-    <div className="mb-4">
+    <div className="mb-3">
       <div className="text-[0.68rem] font-bold tracking-wider text-muted uppercase">{lbl}</div>
       <div className="mt-1 flex justify-between gap-3 text-[0.86rem]">
         <span>
@@ -148,7 +147,7 @@ export function Postcard({ place }: { place: Place }) {
       aria-modal="true"
       aria-labelledby="pc-name"
     >
-      <div className="card-enter max-h-[92vh] w-full overflow-auto rounded-t-[28px] bg-paper px-5 py-7 shadow-[var(--shadow-lg)] sm:max-w-[560px] sm:rounded-[28px] sm:px-9 sm:py-10">
+      <div className="card-enter max-h-[88vh] w-full overflow-auto rounded-t-[28px] bg-paper px-5 py-6 shadow-[var(--shadow-lg)] sm:max-w-[480px] sm:rounded-[28px] sm:px-8 sm:py-8">
         <div className="text-[0.7rem] font-bold tracking-[0.14em] text-lagoon uppercase">{k.line}</div>
         <h2
           id="pc-name"
@@ -159,9 +158,6 @@ export function Postcard({ place }: { place: Place }) {
         <p className="mt-4 text-[clamp(1.05rem,2.4vw,1.32rem)] leading-snug font-semibold text-kowhai">
           {soWhatLine(place)}
         </p>
-        <div className="mt-6">
-          <Beeswarm place={place} />
-        </div>
         {rows.map((r) => (
           <Row key={r.lbl} {...r} />
         ))}

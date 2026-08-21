@@ -47,12 +47,12 @@ export const useExplorer = create<ExplorerState>((set, get) => ({
       level,
       metric,
       welcome: false,
-      postcard: opts?.postcard !== false,
+      postcard: opts?.postcard === true,
     });
   },
   openBySlug: (slug) => {
     const place = findBySlug(slug);
-    if (place) get().select(place, { postcard: true });
+    if (place) get().select(place, { postcard: false });
   },
   hideWelcome: () => set({ welcome: false }),
   hidePostcard: () => set({ postcard: false }),

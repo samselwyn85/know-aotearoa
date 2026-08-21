@@ -271,11 +271,11 @@ export function Explorer({ initialSlug }: { initialSlug?: string }) {
         </p>
       ) : null}
 
-      <div className="mx-auto grid max-w-[1360px] grid-cols-1 gap-5 px-4 py-4 lg:grid-cols-[minmax(320px,46%)_1fr] lg:items-start sm:px-6">
-        <div className="paper-grain overflow-hidden rounded-[24px] border border-hair bg-panel p-4 lg:sticky lg:top-3">
+      <div className="mx-auto grid max-w-[1360px] grid-cols-1 gap-5 px-4 py-4 lg:grid-cols-[minmax(300px,42%)_1fr] lg:items-start sm:px-6">
+        <div className="paper-grain order-2 overflow-hidden rounded-[24px] border border-hair bg-panel p-4 max-h-80 lg:order-1 lg:max-h-none lg:sticky lg:top-3">
           <NzMap />
         </div>
-        <div className="rounded-[24px] border border-hair bg-panel p-5">
+        <div className="order-1 rounded-[24px] border border-hair bg-panel p-4 sm:p-5 lg:order-2 lg:sticky lg:top-3 lg:max-h-[calc(100dvh-8rem)] lg:overflow-y-auto">
           {selected ? <PlaceBrief place={selected} /> : <NzOverview />}
         </div>
       </div>
