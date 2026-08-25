@@ -1,6 +1,6 @@
 node_modules/
 .vercel/
-dist/
+dist-html/
 .nitro/
 .output/
 .tanstack/

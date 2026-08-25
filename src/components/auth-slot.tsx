@@ -3,6 +3,11 @@ import { UserButton } from "@/lib/auth/gates";
 import { useCurrentUserState } from "@/lib/auth/use-current-user";
 
 export function AuthSlot() {
+  if (import.meta.env.VITE_OFFLINE === "true") return null;
+  return <AuthSlotLive />;
+}
+
+function AuthSlotLive() {
   const { user, isPending } = useCurrentUserState();
   if (isPending) {
     return <div className="h-9 w-20 animate-pulse rounded-full bg-hair/80" />;
