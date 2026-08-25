@@ -11,7 +11,7 @@ import type { Place } from "@/lib/types";
 import { Beeswarm } from "./beeswarm";
 import { VsNz } from "./econ-charts";
 import { unempFor, NZ_UNEMP } from "@/lib/economy";
-import { cn } from "@/lib/utils";
+import { cn, placeShareUrl } from "@/lib/utils";
 
 const TABS = [
   { id: "overview", label: "Overview" },
@@ -90,7 +90,7 @@ export function PlaceBrief({ place }: { place: Place }) {
             type="button"
             className="min-h-11 px-2 text-xs font-semibold text-muted hover:text-lagoon"
             onClick={() => {
-              const url = location.origin + "/place/" + place.slug;
+              const url = placeShareUrl(place.slug);
               void navigator.clipboard?.writeText(url).then(
                 () => toast("Link copied"),
                 () => toast("Couldn’t copy — copy from the address bar"),

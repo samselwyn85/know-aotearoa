@@ -1,6 +1,7 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import {
+  Link,
   Outlet,
   RouterProvider,
   createHashHistory,
@@ -12,7 +13,23 @@ import { Explorer } from "@/components/explorer";
 import { EconPicker, EconProfile } from "@/components/econ-profile";
 import { TABS, type ProfileTab } from "@/lib/economy";
 import { AppToaster } from "@/components/app-toaster";
+import { Login } from "@/routes/login";
+import { AppErrorComponent } from "@/lib/error-component";
 import "./styles.css";
+
+function NotFound() {
+  return (
+    <main className="grid min-h-dvh place-items-center bg-paper px-6 text-center text-ink">
+      <div>
+        <p className="font-display text-sm tracking-wide text-lagoon">Know Aotearoa</p>
+        <h1 className="mt-2 font-display text-3xl font-medium tracking-tight">Not Found</h1>
+        <Link to="/" className="mt-6 inline-block text-sm font-medium text-lagoon underline-offset-4 hover:underline">
+          Back to the map
+        </Link>
+      </div>
+    </main>
+  );
+}
 
 const rootRoute = createRootRoute({
   component: () => (
@@ -21,6 +38,8 @@ const rootRoute = createRootRoute({
       <AppToaster />
     </>
   ),
+  errorComponent: AppErrorComponent,
+  notFoundComponent: NotFound,
 });
 
 const indexRoute = createRoute({
@@ -61,12 +80,26 @@ const profileSlugRoute = createRoute({
   },
 });
 
-const routeTree = rootRoute.addChildren([indexRoute, placeRoute, profileIndexRoute, profileSlugRoute]);
+const loginRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/login",
+  component: Login,
+});
+
+const routeTree = rootRoute.addChildren([
+  indexRoute,
+  placeRoute,
+  profileIndexRoute,
+  profileSlugRoute,
+  loginRoute,
+]);
 
 const router = createRouter({
   routeTree,
   history: createHashHistory(),
   defaultPreload: false,
+  defaultNotFoundComponent: NotFound,
+  defaultErrorComponent: AppErrorComponent,
 });
 
 createRoot(document.getElementById("root")!).render(

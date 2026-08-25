@@ -12,7 +12,7 @@ import { METRICS, REGIONS, DISTRICTS, findByName, metricById } from "@/lib/place
 import { locatePlace } from "@/lib/locate";
 import { useExplorer } from "@/lib/store";
 import type { Level, MetricId } from "@/lib/types";
-import { cn } from "@/lib/utils";
+import { cn, HTML_FILE_HREF } from "@/lib/utils";
 
 export function Explorer({ initialSlug }: { initialSlug?: string }) {
   const nav = useNavigate();
@@ -164,15 +164,13 @@ export function Explorer({ initialSlug }: { initialSlug?: string }) {
               <span className="hidden sm:inline">Economic profiles</span>
               <span className="sm:hidden">Profiles</span>
             </Link>
-            {import.meta.env.VITE_OFFLINE === "true" ? null : (
-              <a
-                href="/know-aotearoa.html"
+            <a
+                href={HTML_FILE_HREF}
                 download="know-aotearoa.html"
                 className="hidden rounded-full border border-hair bg-panel px-3 py-2 text-sm font-semibold text-ink hover:border-lagoon hover:text-lagoon sm:inline"
               >
                 Download HTML
               </a>
-            )}
             <Button size="sm" onClick={findMe}>
               <LocateFixed className="size-4" />
               <span className="hidden sm:inline">Find my place</span>

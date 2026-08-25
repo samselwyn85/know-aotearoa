@@ -5,6 +5,7 @@ import { fmt, isRegion, money, pct } from "@/lib/format";
 import { pcRel, postcardChips, soWhatLine, placeKind } from "@/lib/insights";
 import { Button } from "@/components/ui/button";
 import type { Place } from "@/lib/types";
+import { placeShareUrl } from "@/lib/utils";
 
 function Bar({ a, b }: { a: number; b: number }) {
   const scale = Math.max(Math.abs(a), Math.abs(b), 0.001);
@@ -189,7 +190,7 @@ export function Postcard({ place }: { place: Place }) {
           <Button
             variant="secondary"
             onClick={() => {
-              const url = location.origin + "/place/" + place.slug;
+              const url = placeShareUrl(place.slug);
               void navigator.clipboard?.writeText(url).then(
                 () => toast("Link copied"),
                 () => toast("Couldn’t copy — copy from the address bar"),

@@ -4,7 +4,8 @@ import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/login")({ component: Login });
 
-function Login() {
+export function Login() {
+  const offline = import.meta.env.VITE_OFFLINE === "true";
   return (
     <main className="grid min-h-dvh place-items-center bg-paper px-6 py-12 text-ink">
       <div className="w-full max-w-sm">
@@ -15,13 +16,19 @@ function Login() {
           the numbers.
         </p>
         <div className="mt-8 space-y-3">
-          {authEnabled ? (
+          {authEnabled || offline ? (
             GROK_PROVIDERS.map((p) => (
               <Button
                 key={p.providerId}
                 variant="secondary"
                 className="w-full"
-                onClick={() => signIn(p.providerId, { callbackURL: "/" })}
+                onClick={() => {
+                  if (offline) {
+                    window.location.href = "https://know-aotearoa.vercel.app/login";
+                    return;
+                  }
+                  void signIn(p.providerId, { callbackURL: "/" });
+                }}
               >
                 Continue with {p.label}
               </Button>
