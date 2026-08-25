@@ -3,16 +3,7 @@ import { UserButton } from "@/lib/auth/gates";
 import { useCurrentUserState } from "@/lib/auth/use-current-user";
 
 export function AuthSlot() {
-  if (import.meta.env.VITE_OFFLINE === "true") {
-    return (
-      <Link
-        to="/login"
-        className="rounded-full border border-hair bg-panel px-3 py-2 text-sm font-medium text-ink transition hover:border-lagoon hover:text-lagoon"
-      >
-        Sign in
-      </Link>
-    );
-  }
+  if (import.meta.env.VITE_OFFLINE === "true") return null;
   return <AuthSlotLive />;
 }
 

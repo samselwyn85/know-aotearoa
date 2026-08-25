@@ -143,10 +143,14 @@ export function Welcome({ onFind }: { onFind: () => void }) {
             <button type="button" className="min-h-11 underline-offset-4 hover:text-panel hover:underline" onClick={() => dismiss()}>
               Skip to the map
             </button>
-            <span className="mx-2 text-panel/30">·</span>
-            <a href={HTML_FILE_HREF} download="know-aotearoa.html" className="min-h-11 underline-offset-4 hover:text-panel hover:underline">
-              Download HTML
-            </a>
+            {import.meta.env.VITE_OFFLINE === "true" ? null : (
+              <>
+                <span className="mx-2 text-panel/30">·</span>
+                <a href={HTML_FILE_HREF} download="know-aotearoa.html" className="min-h-11 underline-offset-4 hover:text-panel hover:underline">
+                  Download HTML
+                </a>
+              </>
+            )}
             <span className="mx-2 text-panel/30">·</span>
             {NZ_UNEMP.v.toFixed(1)}% unemployment nationwide
           </p>
